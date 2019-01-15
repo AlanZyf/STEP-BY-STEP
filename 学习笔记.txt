@@ -1,0 +1,29 @@
+这几天有点忙，竟然没有顾得上学习，感觉十分懊悔。
+———————————————————————————————————————————————————————————————2019-1-14———————————————————————————————————————————————————————————————
+今天主要是hive部分 
+关于manage table\temporary table\external table之间的关系：
+	mt是管理（内部）表，关于他的修改删除，导入，对于数据文件都有直接影响
+	tt是临时表，主要用来存放，临时的查询结果，关闭hive后临时表会自动删除，元数据删除但数据文件不受影响，若是drop掉的话数据文件也会一起删掉
+	et是外部表，它可以共享内部表的数据，对于查询还有不同功能之间的分割有帮助，他对数据文件没有影响
+	
+partitioned by分区表：
+	通过一个表内没有的字段进行分区，提高查询效率。建表的时候加上partitioned by，但是得在row format之前，
+	load data [local] inpath '//' into table t_name partitioned by (p_row data_style)
+	select * from t_name partitlion (p_row='')
+	
+在hive中：
+	dfs 可查看hdfs上面的文件和路径，如：dfs -ls /
+	!	可查看本地文件和路径，如：！ls
+	
+as\like建表方式：
+	like只复制，原表的结构
+	as应该是，可以将数据一起复制过来，可以将其它表的查询结果as到一个新的表里
+	
+row format delimited fields terminated by '':
+	规定数据导入时，间隔的样式，如：空格、\t、,
+	
+只靠自己回忆，竟然只回忆出这么一点东西，，
+	desc [formatted/extended] table_name:查看表的信息，如果加条件的话，就是更加详细的查看，
+	alter、insert：修改表的信息，和追加，添加表的数据
+	drop：删除
+	add jar/file '/path':添加jar包和文件，主要用于自定义的函数，还有自己运行的一些文件，
